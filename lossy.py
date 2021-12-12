@@ -74,20 +74,15 @@ class LossyTenHash:
         return self
 
 
-assert LossyTenHash().value == 0 % LossyTenHash.PRIME
-assert LossyTenHash.FromString("345").value == 345 % LossyTenHash.PRIME
-assert LossyTenHash.FromValue(345).value == 345 % LossyTenHash.PRIME
-assert (
-    LossyTenHash.FromValue(345).slide_right("6", "3").value == 456 % LossyTenHash.PRIME
-)
-assert (
-    LossyTenHash.FromValue(345).slide_right("6", "3").add_right("7").value
-    == 4567 % LossyTenHash.PRIME
-)
-assert (
-    LossyTenHash.FromValue(345).slide_left("2", "5").value == 234 % LossyTenHash.PRIME
-)
-assert (
-    LossyTenHash.FromValue(345).slide_left("2", "5").add_left("1").value
-    == 1234 % LossyTenHash.PRIME
-)
+test_cases = [
+    (LossyTenHash(), 0),
+    (LossyTenHash.FromString("345"), 345),
+    (LossyTenHash.FromValue(345), 345),
+    (LossyTenHash.FromValue(345).slide_right("6", "3"), 456),
+    (LossyTenHash.FromValue(345).slide_right("6", "3").add_right("7"), 4567),
+    (LossyTenHash.FromValue(345).slide_left("2", "5"), 234),
+    (LossyTenHash.FromValue(345).slide_left("2", "5").add_left("1"), 1234),
+]
+
+for t in test_cases:
+    assert t[0].value == t[1] % LossyTenHash.PRIME
