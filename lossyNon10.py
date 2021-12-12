@@ -14,8 +14,8 @@ def modInverse(a, prime):
 # 251 is largest prime < 256
 # using mod 251 arithmetic, we can keep our hash values in 8 bits
 class LossyTenHash:
-    PRIME = 251  # must not be 2 or 5
-    CHAR_SET_SIZE = 10
+    PRIME = 997  # must not be 2 or 5
+    CHAR_SET_SIZE = 256
     MULTIPLICATIVE_INVERSE_OF_CHAR_SET_SIZE = modInverse(CHAR_SET_SIZE, PRIME)
 
     @staticmethod
