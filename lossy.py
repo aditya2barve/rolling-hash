@@ -15,7 +15,7 @@ def modInverse(a, prime):
 # using mod 251 arithmetic, we can keep our hash values in 8 bits
 class LossyTenHash:
     PRIME = 251
-    MULTIPLICATIVE_INVERSE_OF_10_MODULO_251 = modInverse(10, PRIME)
+    MULTIPLICATIVE_INVERSE_OF_10 = modInverse(10, PRIME)
 
     @staticmethod
     def FromString(str):
@@ -63,7 +63,7 @@ class LossyTenHash:
         # nine_tenths = 9 * h.value // 10
         # h.value = (h.value - nine_tenths) % h.PRIME
         # since we can't divide by 10, multiply by the multiplicative inverse of 10 in mod 251.
-        h.value = (h.value * h.MULTIPLICATIVE_INVERSE_OF_10_MODULO_251) % h.PRIME
+        h.value = (h.value * h.MULTIPLICATIVE_INVERSE_OF_10) % h.PRIME
         h.value = (h.value + h.PRIME) % h.PRIME
         h.str = h.str[:-1]
         return h
