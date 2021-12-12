@@ -27,48 +27,54 @@ class LossyTenHash:
         self.str = ""
         self.value = 0
 
+    def copy(self):
+        h = LossyTenHash()
+        h.str = self.str
+        h.value = self.value
+        return h
+
     def slide_right(self, new_char):
-        self.add_right(new_char)
-        self.drop_left()
-        return self
+        return self.add_right(new_char).drop_left()
 
     def slide_left(self, new_char):
-        self.add_left(new_char)
-        self.drop_right()
-        return self
+        return self.add_left(new_char).drop_right()
 
     def add_right(self, new_char):
-        self.value = 10 * self.value + int(new_char)
-        self.value = self.value % self.PRIME
-        self.str = self.str + new_char
-        return self
+        h = self.copy()
+        h.value = 10 * h.value + int(new_char)
+        h.value = h.value % h.PRIME
+        h.str = h.str + new_char
+        return h
 
     def add_left(self, new_char):
-        self.value = 10 ** len(self.str) * int(new_char) + self.value
-        self.value = self.value % self.PRIME
-        self.str = new_char + self.str
-        return self
+        h = self.copy()
+        h.value = 10 ** len(h.str) * int(new_char) + h.value
+        h.value = h.value % h.PRIME
+        h.str = new_char + h.str
+        return h
 
     def drop_right(self):
-        char_to_drop = self.str[-1]
+        h = self.copy()
+        char_to_drop = h.str[-1]
         value_to_drop = int(char_to_drop)
-        self.value = (self.value - value_to_drop) % self.PRIME
+        h.value = (h.value - value_to_drop) % h.PRIME
         # the following two lines fail because we don't have the 2340 anymore. we have 2340 % 251 = 81.
-        # nine_tenths = 9 * self.value // 10
-        # self.value = (self.value - nine_tenths) % self.PRIME
+        # nine_tenths = 9 * h.value // 10
+        # h.value = (h.value - nine_tenths) % h.PRIME
         # since we can't divide by 10, multiply by the multiplicative inverse of 10 in mod 251.
-        self.value = (self.value * modInverse(10, self.PRIME)) % self.PRIME
-        self.value = (self.value + self.PRIME) % self.PRIME
-        self.str = self.str[:-1]
-        return self
+        h.value = (h.value * modInverse(10, h.PRIME)) % h.PRIME
+        h.value = (h.value + h.PRIME) % h.PRIME
+        h.str = h.str[:-1]
+        return h
 
     def drop_left(self):
-        char_to_drop = self.str[0]
-        value_to_drop = int(char_to_drop) * (10 ** (len(self.str) - 1))
-        self.value = (self.value - value_to_drop) % self.PRIME
-        self.value = (self.value + self.PRIME) % self.PRIME
-        self.str = self.str[1:]
-        return self
+        h = self.copy()
+        char_to_drop = h.str[0]
+        value_to_drop = int(char_to_drop) * (10 ** (len(h.str) - 1))
+        h.value = (h.value - value_to_drop) % h.PRIME
+        h.value = (h.value + h.PRIME) % h.PRIME
+        h.str = h.str[1:]
+        return h
 
 
 test_cases = [
