@@ -27,9 +27,10 @@ class LossyTenHash:
     def FromValue(value):
         return LossyTenHash(value)
 
-    def __init__(self, value=0):
-        self.value = value % self.PRIME
-        self.number_of_chars = len(str(value))
+    def __init__(self):
+        self.str = ""
+        self.value = 0
+        self.number_of_chars = 0
 
     def slide_right(self, new_char, char_to_drop):
         self.add_right(new_char)
@@ -76,11 +77,11 @@ class LossyTenHash:
 test_cases = [
     (LossyTenHash(), 0),
     (LossyTenHash.FromString("345"), 345),
-    (LossyTenHash.FromValue(345), 345),
-    (LossyTenHash.FromValue(345).slide_right("6", "3"), 456),
-    (LossyTenHash.FromValue(345).slide_right("6", "3").add_right("7"), 4567),
-    (LossyTenHash.FromValue(345).slide_left("2", "5"), 234),
-    (LossyTenHash.FromValue(345).slide_left("2", "5").add_left("1"), 1234),
+    (LossyTenHash.FromString("345"), 345),
+    (LossyTenHash.FromString("345").slide_right("6", "3"), 456),
+    (LossyTenHash.FromString("345").slide_right("6", "3").add_right("7"), 4567),
+    (LossyTenHash.FromString("345").slide_left("2", "5"), 234),
+    (LossyTenHash.FromString("345").slide_left("2", "5").add_left("1"), 1234),
 ]
 
 for t in test_cases:
