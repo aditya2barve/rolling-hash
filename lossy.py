@@ -1,7 +1,6 @@
 needle = "456"
 haystack = "1234567890"
 
-# size of hash value increases linearly with length of needle
 # 251 is largest prime < 256
 # using mod 251 arithmetic, we can keep our hash values in 8 bits
 class LosslessTenHash:
