@@ -26,7 +26,6 @@ class LossyTenHash:
     def __init__(self):
         self.str = ""
         self.value = 0
-        self.number_of_chars = 0
 
     def slide_right(self, new_char, char_to_drop):
         self.add_right(new_char)
@@ -41,13 +40,13 @@ class LossyTenHash:
     def add_right(self, new_char):
         self.value = 10 * self.value + int(new_char)
         self.value = self.value % self.PRIME
-        self.number_of_chars += 1
+        self.str = self.str + new_char
         return self
 
     def add_left(self, new_char):
-        self.value = 10 ** self.number_of_chars * int(new_char) + self.value
+        self.value = 10 ** len(self.str) * int(new_char) + self.value
         self.value = self.value % self.PRIME
-        self.number_of_chars += 1
+        self.str = new_char + self.str
         return self
 
     def drop_right(self, char_to_drop):
@@ -59,14 +58,14 @@ class LossyTenHash:
         # since we can't divide by 10, multiply by the multiplicative inverse of 10 in mod 251.
         self.value = (self.value * modInverse(10, self.PRIME)) % self.PRIME
         self.value = (self.value + self.PRIME) % self.PRIME
-        self.number_of_chars -= 1
+        self.str = self.str[:-1]
         return self
 
     def drop_left(self, char_to_drop):
-        value_to_drop = int(char_to_drop) * (10 ** (self.number_of_chars - 1))
+        value_to_drop = int(char_to_drop) * (10 ** (len(self.str) - 1))
         self.value = (self.value - value_to_drop) % self.PRIME
         self.value = (self.value + self.PRIME) % self.PRIME
-        self.number_of_chars -= 1
+        self.str = self.str[1:]
         return self
 
 
