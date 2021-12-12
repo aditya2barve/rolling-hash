@@ -8,7 +8,7 @@ def modInverse(a, prime):
         if (a * x) % prime == 1:
             return x
 
-    return -1
+    return None
 
 
 # 251 is largest prime < 256
