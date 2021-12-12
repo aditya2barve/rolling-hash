@@ -1,8 +1,6 @@
 needle = "456"
 haystack = "1234567890"
 
-# make the data structure immutable
-
 # size of hash value increases linearly with length of needle
 class LosslessTenHash:
     @staticmethod
