@@ -80,7 +80,6 @@ class LossyTenHash:
 test_cases = [
     (LossyTenHash(), 0),
     (LossyTenHash.FromString("345"), 345),
-    (LossyTenHash.FromString("345"), 345),
     (LossyTenHash.FromString("345").slide_right("6"), 456),
     (LossyTenHash.FromString("345").slide_right("6").add_right("7"), 4567),
     (LossyTenHash.FromString("345").slide_left("2"), 234),
