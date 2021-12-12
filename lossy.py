@@ -77,13 +77,15 @@ class LossyTenHash:
         return h
 
 
+h345 = LossyTenHash.FromString("345")
+
 test_cases = [
     (LossyTenHash(), 0),
-    (LossyTenHash.FromString("345"), 345),
-    (LossyTenHash.FromString("345").slide_right("6"), 456),
-    (LossyTenHash.FromString("345").slide_right("6").add_right("7"), 4567),
-    (LossyTenHash.FromString("345").slide_left("2"), 234),
-    (LossyTenHash.FromString("345").slide_left("2").add_left("1"), 1234),
+    (h345, 345),
+    (h345.slide_right("6"), 456),
+    (h345.slide_right("6").add_right("7"), 4567),
+    (h345.slide_left("2"), 234),
+    (h345.slide_left("2").add_left("1"), 1234),
 ]
 
 for t in test_cases:
