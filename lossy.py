@@ -15,7 +15,8 @@ def modInverse(a, prime):
 # using mod 251 arithmetic, we can keep our hash values in 8 bits
 class LossyTenHash:
     PRIME = 251  # must not be 2 or 5
-    MULTIPLICATIVE_INVERSE_OF_10 = modInverse(10, PRIME)
+    CHAR_SET_SIZE = 10
+    MULTIPLICATIVE_INVERSE_OF_CHAR_SET_SIZE = modInverse(CHAR_SET_SIZE, PRIME)
 
     @staticmethod
     def FromString(str):
@@ -42,14 +43,14 @@ class LossyTenHash:
 
     def add_right(self, new_char):
         h = self.copy()
-        h.value = 10 * h.value + int(new_char)
+        h.value = h.CHAR_SET_SIZE * h.value + int(new_char)
         h.value = h.value % h.PRIME
         h.str = h.str + new_char
         return h
 
     def add_left(self, new_char):
         h = self.copy()
-        h.value = 10 ** len(h.str) * int(new_char) + h.value
+        h.value = h.CHAR_SET_SIZE ** len(h.str) * int(new_char) + h.value
         h.value = h.value % h.PRIME
         h.str = new_char + h.str
         return h
@@ -63,7 +64,7 @@ class LossyTenHash:
         # nine_tenths = 9 * h.value // 10
         # h.value = (h.value - nine_tenths) % h.PRIME
         # since we can't divide by 10, multiply by the multiplicative inverse of 10 in mod 251.
-        h.value = (h.value * h.MULTIPLICATIVE_INVERSE_OF_10) % h.PRIME
+        h.value = (h.value * h.MULTIPLICATIVE_INVERSE_OF_CHAR_SET_SIZE) % h.PRIME
         h.value = (h.value + h.PRIME) % h.PRIME
         h.str = h.str[:-1]
         return h
@@ -71,7 +72,7 @@ class LossyTenHash:
     def drop_left(self):
         h = self.copy()
         char_to_drop = h.str[0]
-        value_to_drop = int(char_to_drop) * (10 ** (len(h.str) - 1))
+        value_to_drop = int(char_to_drop) * (h.CHAR_SET_SIZE ** (len(h.str) - 1))
         h.value = (h.value - value_to_drop) % h.PRIME
         h.value = (h.value + h.PRIME) % h.PRIME
         h.str = h.str[1:]
