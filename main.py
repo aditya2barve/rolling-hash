@@ -6,8 +6,7 @@ class TenHash:
     def __init__(self, str=""):
         self.value = 0
         for c in str:
-            self.value = self.value * 10
-            self.value = self.value + int(c)
+            self.add_right(c)
 
     def slide_right(self, new_char):
         self.add_right(new_char)
@@ -20,13 +19,12 @@ class TenHash:
         return self.value
 
     def add_right(self, new_char):
-        self.value = self.value * 10
-        self.value = self.value + int(new_char)
+        self.value = 10 * self.value + int(new_char)
         return self.value
 
     def add_left(self, new_char):
         number_of_chars = len(str(self.value))
-        self.value = self.value + int(new_char) * 10 ** number_of_chars
+        self.value = 10 ** number_of_chars * int(new_char) + self.value
         return self.value
 
     def drop_right(self):
