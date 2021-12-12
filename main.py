@@ -2,7 +2,7 @@ needle = "456"
 haystack = "1234567890"
 
 
-class TenHash:
+class LosslessTenHash:
     def __init__(self, str=""):
         self.value = 0
         for c in str:
