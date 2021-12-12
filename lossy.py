@@ -23,10 +23,6 @@ class LossyTenHash:
             h = h.add_right(c)
         return h
 
-    @staticmethod
-    def FromValue(value):
-        return LossyTenHash(value)
-
     def __init__(self):
         self.str = ""
         self.value = 0
