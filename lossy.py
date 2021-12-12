@@ -56,11 +56,10 @@ class LossyTenHash:
     def drop_right(self, char_to_drop):
         value_to_drop = int(char_to_drop)
         self.value = (self.value - value_to_drop) % self.PRIME
-        # this line fails. we don't have the "2340 anymore. we have 2340 % 251 = 81"
-        # so we can't divide by 10. find out the multiplicative inverse of 10 in mod 251 space
-        # and multiply by it
+        # the following two lines fail because we don't have the 2340 anymore. we have 2340 % 251 = 81.
         # nine_tenths = 9 * self.value // 10
         # self.value = (self.value - nine_tenths) % self.PRIME
+        # since we can't divide by 10, multiply by the multiplicative inverse of 10 in mod 251.
         self.value = (self.value * modInverse(10, self.PRIME)) % self.PRIME
         self.value = (self.value + self.PRIME) % self.PRIME
         self.number_of_chars -= 1
