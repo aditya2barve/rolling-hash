@@ -27,14 +27,14 @@ class LossyTenHash:
         self.str = ""
         self.value = 0
 
-    def slide_right(self, new_char, char_to_drop):
+    def slide_right(self, new_char):
         self.add_right(new_char)
-        self.drop_left(char_to_drop)
+        self.drop_left()
         return self
 
-    def slide_left(self, new_char, char_to_drop):
+    def slide_left(self, new_char):
         self.add_left(new_char)
-        self.drop_right(char_to_drop)
+        self.drop_right()
         return self
 
     def add_right(self, new_char):
@@ -49,7 +49,8 @@ class LossyTenHash:
         self.str = new_char + self.str
         return self
 
-    def drop_right(self, char_to_drop):
+    def drop_right(self):
+        char_to_drop = self.str[-1]
         value_to_drop = int(char_to_drop)
         self.value = (self.value - value_to_drop) % self.PRIME
         # the following two lines fail because we don't have the 2340 anymore. we have 2340 % 251 = 81.
@@ -61,7 +62,8 @@ class LossyTenHash:
         self.str = self.str[:-1]
         return self
 
-    def drop_left(self, char_to_drop):
+    def drop_left(self):
+        char_to_drop = self.str[0]
         value_to_drop = int(char_to_drop) * (10 ** (len(self.str) - 1))
         self.value = (self.value - value_to_drop) % self.PRIME
         self.value = (self.value + self.PRIME) % self.PRIME
@@ -73,10 +75,10 @@ test_cases = [
     (LossyTenHash(), 0),
     (LossyTenHash.FromString("345"), 345),
     (LossyTenHash.FromString("345"), 345),
-    (LossyTenHash.FromString("345").slide_right("6", "3"), 456),
-    (LossyTenHash.FromString("345").slide_right("6", "3").add_right("7"), 4567),
-    (LossyTenHash.FromString("345").slide_left("2", "5"), 234),
-    (LossyTenHash.FromString("345").slide_left("2", "5").add_left("1"), 1234),
+    (LossyTenHash.FromString("345").slide_right("6"), 456),
+    (LossyTenHash.FromString("345").slide_right("6").add_right("7"), 4567),
+    (LossyTenHash.FromString("345").slide_left("2"), 234),
+    (LossyTenHash.FromString("345").slide_left("2").add_left("1"), 1234),
 ]
 
 for t in test_cases:
