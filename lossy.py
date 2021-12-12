@@ -14,7 +14,7 @@ def modInverse(a, prime):
 # 251 is largest prime < 256
 # using mod 251 arithmetic, we can keep our hash values in 8 bits
 class LossyTenHash:
-    PRIME = 251
+    PRIME = 251  # must not be 2 or 5
     MULTIPLICATIVE_INVERSE_OF_10 = modInverse(10, PRIME)
 
     @staticmethod
